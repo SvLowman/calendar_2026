@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Schloss Neuschwanstein</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="quiz-wrapper">
+      <div class="header-container">
+        <div class="header-container-title">Schloss Neuschwanstein</div>
+      </div>
+      <div class="quiz-container">
+        <div class="instruction-container">
+          <div class="instruction">🗽 Tippe auf die blauen Balken, um mehr Informationen zu bekommen!</div>
+        </div>
+        <div class="accordion-container">
+          <button class="accordion-button"></button>
+          <div class="accordion-panel"></div>
+        </div>
+      </div>
+      <div class="quiz-container">
+        <div class="instruction-container">
+          <div class="instruction">🗽 Ordne die Wörter in den blauen Bausteinen den Lücken im Text zu!</div>
+        </div>
+        <div class="drag-and-drop-container">
+          <div class="drag-and-drop-text-container"></div>
+          <div class="drag-and-drop-draggable-container"></div>
+          <div class="drag-and-drop-solve-container">
+            <button class="solve-quiz-button invisible">Überprüfen</button>
+            <div class="feedback-container invisible"></div>
+            <button class="refresh-quiz-button invisible">Noch einmal!</button>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-container">
+        <div class="instruction-container">
+          <div class="instruction">🗽 Decke die Kartenpaare auf, die zueinander gehören!</div>
+        </div>
+        <div class="memory-game-container">
+          <div class="memory-cards-container"></div>
+          <div class="memory-feedback-container">
+            <div class="memory-feedback-pair"></div>
+            <button class="memory-feedback-continue invisible">Weiter!</button>
+            <div class="memory-feedback-final"></div>
+            <button class="refresh-memory-button invisible">Noch einmal!</button>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-container">
+        <div class="instruction-container">
+          <div class="instruction">🗽 Tippe auf den Radio-Button mit der korrekten Antwortmöglichkeit!</div>
+        </div>
+        <div>
+          <div class="single-choice-container">
+            <div class="single-choice-question"><div></div></div>
+            <div class="single-choice-options-container">
+              <form>
+                <button class="single-choice-submit-button" type="submit">Überprüfen</button>
+              </form>
+            </div>
+            <div class="single-choice-feedback-container">
+              <div class="single-choice-feedback"><div></div></div>
+              <div class="single-choice-answer"><div></div></div>
+              <button class="refresh-single-choice-button invisible">Noch einmal!</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="footer-container"><div>Im Advent 2025</div></div>
+  </div>
+  <script src='./javascript/07-script.js'></script>
+</body>
+</html>
