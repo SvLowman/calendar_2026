@@ -7,6 +7,25 @@
   }
   
   :root {
+    --black: #03010c;
+    --white: #fff7e5;
+    --paper: #fdf9e0;
+    --paper-2: #f8fbe0;
+    --papershade: #dbca9c;
+    --dark: #100d18;
+    --blue: #475f69;
+    --lightblue: #8da8b1;
+    --green: #2e4e37;
+    --lightgreen: #667862;
+    --red: #590014;
+    --lightred: #fe1e28;
+    --accent-1: #e7cdbc;
+    --accent-2: #fbbe92;
+    --accent-3: #dfa692;
+    --cube: 1rem;
+  }
+/*
+    :root {
     --black: #000a01;
     --white: #fefefc;
     --paper: #f1f1e9;
@@ -24,7 +43,8 @@
     --accent-3: #bbe700;
     --cube: 1rem;
   }
-  
+  */
+
   .page-wrapper {
     background: linear-gradient(var(--accent-1), var(--accent-3), var(--accent-2));
     display: flex;
