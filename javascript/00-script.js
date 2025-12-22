@@ -279,7 +279,7 @@ const parcours01 = {
       },
       pair2: {
         cards: [
-        { type: "text", value: "Neptun- brunnen" },
+        { type: "text", value: "Neptunbrunnen" },
         { type: "image", value: "./assets/00 - 0302.JPG" },
       ],
         feedback: "Der berühmte Brunnen steht vor dem Roten Rathaus - der Meeresgott Neptun war für den Kaiser damals ein Sinnbild von Macht.",
