@@ -3,22 +3,23 @@
 const parcours01 = {
     accordion: {
       1: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Wo steht das?",
+        "panel-info": "BERLIN ist die Hauptstadt und größte Stadt Deutschlands. Hier leben fast vier Millionen Menschen.",
+        "panel-image": "./assets/00 - 0101.JPG",
       },
       2: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Und vor allem: warum?",
+        "panel-info": "Der preußische König Friedrich Wilhelm II. wollte ein besonders prächtiges Stadttor für die Berliner Innenstadt. Er ließ es im Stil eines griechischen Tempels bauen.",
       },
     },
   };
   
   document.addEventListener("DOMContentLoaded", () => {
     const accordionData = parcours01.accordion;
-    const accordionContainer = document.querySelector(".accordion-container");
+    const accordionWrapper = document.querySelector(".accordion-wrapper");
   
     // Clear the accordion container to avoid duplication
-    accordionContainer.innerHTML = "";
+    accordionWrapper.innerHTML = "";
   
     // Generate accordion items dynamically
     Object.values(accordionData).forEach((item) => {
@@ -33,6 +34,16 @@ const parcours01 = {
   
       const panel = document.createElement("div");
       panel.classList.add("accordion-panel");
+
+      if (item["panel-image"]) {
+        const panelImage = document.createElement("img");
+        panelImage.classList.add("accordion-image");
+        panelImage.src = item["panel-image"];
+        //panelImage.alt = item["button-p"] || "Bild zur Sehenswürdigkeit";
+        panelImage.loading = "lazy"; // optional Performance
+        panel.appendChild(panelImage); // ✅ bewusst VOR der Info
+      }
+
       const panelInfo = document.createElement("div");
       panelInfo.classList.add("accordion-info");
       panelInfo.textContent = item["panel-info"];
@@ -42,7 +53,7 @@ const parcours01 = {
       container.appendChild(panel);
   
       // Append to the accordion container
-      accordionContainer.appendChild(container);
+      accordionWrapper.appendChild(container);
     });
   
     // Add functionality to the accordion buttons
@@ -259,18 +270,27 @@ const parcours01 = {
   const parcours03 = {
     memory: {
       pair1: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Berliner Fernsehturm" },
+        { type: "image", value: "./assets/00 - 0301.JPG" },
+      ],
+        feedback: "Der Berliner Fernsehturm ist mit 368 Metern das höchste Bauwerk Deutschlands.",
         color: "var(--accent-1)",
       },
       pair2: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Neptun- brunnen" },
+        { type: "image", value: "./assets/00 - 0302.JPG" },
+      ],
+        feedback: "Der berühmte Brunnen steht vor dem Roten Rathaus - der Meeresgott Neptun war für den Kaiser damals ein Sinnbild von Macht.",
         color: "var(--accent-2)",
       },
       pair3: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Reichstags- gebäude" },
+        { type: "image", value: "./assets/00 - 0303.JPG" },
+      ],
+        feedback: "Hier versammelt sich der Deutsche Bundestag. Aber weil Deutschland bei Bau des Gebäudes noch ein Kaiserreich war, heißt es Reichstag.",
         color: "var(--accent-3)",
       }
     },
@@ -289,12 +309,12 @@ const parcours01 = {
   
     // Generate memory cards dynamically
     const generateCards = () => {
-      const pairs = Object.values(parcours03.memory);
-      const allCards = pairs.flatMap((pair) =>
-        pair.cards.map((card) => ({
-          value: card,
+      const pairs = Object.entries(parcours03.memory);
+      const allCards = pairs.flatMap(([pairKey, pair]) =>
+        pair.cards.map((cardItem) => ({
+          value: cardItem,
           color: pair.color,
-          pairId: pair,
+          pairKey: pairKey,
         }))
       );
   
@@ -304,11 +324,21 @@ const parcours01 = {
       shuffledCards.forEach((card) => {
         const cardElement = document.createElement("div");
         cardElement.className = "memory-card";
-        cardElement.dataset.pairId = card.pairId.cards.join(); // Use joined cards to identify pairs
+        cardElement.dataset.pairId = card.pairKey; // Use joined cards to identify pairs
   
         const front = document.createElement("div");
         front.className = "memory-card-front";
-        front.textContent = card.value;
+        front.classList.add("is-image");
+        if (card.value.type === "image") {
+          const img = document.createElement("img");
+          img.className = "memory-card-image";
+          img.src = card.value.value;
+          img.loading = "lazy";
+          front.appendChild(img);
+          } else {
+            front.classList.add("is-text");
+            front.textContent = card.value.value;
+        }
         front.style.border = `0.5rem solid ${card.color}`;
   
         const back = document.createElement("div");
@@ -346,21 +376,19 @@ const parcours01 = {
         card2.classList.add("matched");
         matchedPairs++;
   
-        const feedback = Object.values(parcours03.memory).find(
-          (pair) => pair.cards.join() === pairId1
-        ).feedback;
+        const feedback = parcours03.memory[pairId1].feedback;
   
         feedbackPair.textContent = feedback;
         feedbackPair.style.display = "block";
         continueButton.classList.remove("invisible");
   
-        continueButton.addEventListener("click", () => {
+        continueButton.onclick = () => {
           feedbackPair.style.display = "none";
           continueButton.classList.add("invisible");
           selectedCards = [];
           allowClicks = true; // Allow clicks after feedback is handled
           checkGameCompletion();
-        });
+        };
       } else {
         feedbackPair.textContent = "Das war noch nicht richtig!";
         feedbackPair.style.display = "block";
@@ -409,14 +437,14 @@ const parcours01 = {
   const parcours04 = {
     "single-choice": {
       card1: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "Wie heißt der Wagen mit den vier Pferden auf dem Tor?",
+        options: ["Quadriga", "Pentagramm", "Trilobit"],
+        answer: "Die Quadriga ist ein Friedenssymbol. Als Napoleon Berlin eroberte, nahm er die Quadriga mit und ließ sie in Paris aufstellen.",
       },
       card2: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "Wonach ist das Brandenburger Tor benannt?",
+        options: ["Nach einer Stadt", "Nach seinem Architekten", "Nach einem Hacksteak im Brötchen"],
+        answer: "Wer Berlin durch dieses Tor verlässt, fährt in Richtung der Stadt Brandenburg. Früher hieß das Tor allerdings Friedenstor.",
       },
     },
   };
