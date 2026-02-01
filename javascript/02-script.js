@@ -4,8 +4,8 @@ const parcours01 = {
     accordion: {
       1: {
         "button-p": "Wo steht die?",
-        "panel-info": "KOPENHAGEN (oder auf Dänisch: KØBENHAVN) ist die Hauptstadt von Dänemark. Es ist die größte Stadt des Landes und hat 660.000 Einwohner - etwa so viel wie Düsseldorf.",
-        "panel-image": "./assets/02 - 0101.JPG",
+        "panel-info": "KOPENHAGEN (oder auf Dänisch: KØBENHAVN) ist die Hauptstadt von Dänemark. Sie ist die größte Stadt des Landes und hat 660.000 Einwohner - etwa so viel wie Düsseldorf.",
+        "panel-image": "./assets/02 - 0101.jpg",
       },
       2: {
         "button-p": "Und vor allem: Warum?",
