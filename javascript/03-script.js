@@ -271,7 +271,7 @@ const parcours01 = {
     memory: {
       pair1: {
         cards: [
-        { type: "text", value: "Strudlhof-"<br>"stiege" },
+        { type: "text", value: "Strudlhofstiege" },
         { type: "image", value: "./assets/03 - 0301.JPG" },
       ],
         feedback: "Die Strudlhofstiege ist eine berühmte Freitreppe. Sie ist eher wie ein Park gestaltet als wie eine schlichte Treppe.",
