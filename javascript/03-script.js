@@ -3,22 +3,23 @@
 const parcours01 = {
     accordion: {
       1: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Wo steht das?",
+        "panel-info": "WIEN ist die österreichische Hauptstadt. Hier leben etwa 2 Millionen Menschen. Wien gehört zu den traditionsreichsten Städten Europas und war die Wahlheimat von Mozart und Beethoven.",
+        "panel-image": "./assets/03 - 0101.jpg",
       },
       2: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Und vor allem: Warum?",
+        "panel-info": "Im Jahre 1897 war Österreich noch ein Kaiserreich. Der Kaiser Franz Joseph I. war in diesem Jahr bereits 50 Jahre lang Kaiser und ließ zur Feier das Riesenrad bauen - Riesenräder waren damals eine sehr neue Erfindung.",
       },
     },
   };
   
   document.addEventListener("DOMContentLoaded", () => {
     const accordionData = parcours01.accordion;
-    const accordionContainer = document.querySelector(".accordion-container");
+    const accordionWrapper = document.querySelector(".accordion-wrapper");
   
     // Clear the accordion container to avoid duplication
-    accordionContainer.innerHTML = "";
+    accordionWrapper.innerHTML = "";
   
     // Generate accordion items dynamically
     Object.values(accordionData).forEach((item) => {
@@ -33,6 +34,16 @@ const parcours01 = {
   
       const panel = document.createElement("div");
       panel.classList.add("accordion-panel");
+
+      if (item["panel-image"]) {
+        const panelImage = document.createElement("img");
+        panelImage.classList.add("accordion-image");
+        panelImage.src = item["panel-image"];
+        //panelImage.alt = item["button-p"] || "Bild zur Sehenswürdigkeit";
+        panelImage.loading = "lazy"; // optional Performance
+        panel.appendChild(panelImage); // ✅ bewusst VOR der Info
+      }
+
       const panelInfo = document.createElement("div");
       panelInfo.classList.add("accordion-info");
       panelInfo.textContent = item["panel-info"];
@@ -42,7 +53,7 @@ const parcours01 = {
       container.appendChild(panel);
   
       // Append to the accordion container
-      accordionContainer.appendChild(container);
+      accordionWrapper.appendChild(container);
     });
   
     // Add functionality to the accordion buttons
@@ -259,18 +270,27 @@ const parcours01 = {
   const parcours03 = {
     memory: {
       pair1: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Strudlhof-stiege" },
+        { type: "image", value: "./assets/03 - 0301.JPG" },
+      ],
+        feedback: "Die Strudlhofstiege ist eine berühmte Freitreppe. Sie ist eher wie ein Park gestaltet als wie eine schlichte Treppe.",
         color: "var(--accent-1)",
       },
       pair2: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Hofburg" },
+        { type: "image", value: "./assets/03 - 0302.JPG" },
+      ],
+        feedback: "In der Hofburg lebten 600 Jahre lang die österreichischen Kaiser. Hier befinden sich auch die Hofreitschule und die Nationalbibliothek.",
         color: "var(--accent-2)",
       },
       pair3: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Votivkirche" },
+        { type: "image", value: "./assets/03 - 0303.JPG" },
+      ],
+        feedback: "Die Votivkirche wirkt deutlich älter als sie ist. Der Bruder des Kaisers Franz Joseph I. hatte sie im mittelalterlichen Stil erbauen lassen, nachdem der Kaiser einen Mordanschlag überlebt hatte.",
         color: "var(--accent-3)",
       }
     },
@@ -289,12 +309,12 @@ const parcours01 = {
   
     // Generate memory cards dynamically
     const generateCards = () => {
-      const pairs = Object.values(parcours03.memory);
-      const allCards = pairs.flatMap((pair) =>
-        pair.cards.map((card) => ({
-          value: card,
+      const pairs = Object.entries(parcours03.memory);
+      const allCards = pairs.flatMap(([pairKey, pair]) =>
+        pair.cards.map((cardItem) => ({
+          value: cardItem,
           color: pair.color,
-          pairId: pair,
+          pairKey: pairKey,
         }))
       );
   
@@ -304,11 +324,21 @@ const parcours01 = {
       shuffledCards.forEach((card) => {
         const cardElement = document.createElement("div");
         cardElement.className = "memory-card";
-        cardElement.dataset.pairId = card.pairId.cards.join(); // Use joined cards to identify pairs
+        cardElement.dataset.pairId = card.pairKey; // Use joined cards to identify pairs
   
         const front = document.createElement("div");
         front.className = "memory-card-front";
-        front.textContent = card.value;
+        front.classList.add("is-image");
+        if (card.value.type === "image") {
+          const img = document.createElement("img");
+          img.className = "memory-card-image";
+          img.src = card.value.value;
+          img.loading = "lazy";
+          front.appendChild(img);
+          } else {
+            front.classList.add("is-text");
+            front.textContent = card.value.value;
+        }
         front.style.border = `0.5rem solid ${card.color}`;
   
         const back = document.createElement("div");
@@ -346,21 +376,19 @@ const parcours01 = {
         card2.classList.add("matched");
         matchedPairs++;
   
-        const feedback = Object.values(parcours03.memory).find(
-          (pair) => pair.cards.join() === pairId1
-        ).feedback;
+        const feedback = parcours03.memory[pairId1].feedback;
   
         feedbackPair.textContent = feedback;
         feedbackPair.style.display = "block";
         continueButton.classList.remove("invisible");
   
-        continueButton.addEventListener("click", () => {
+        continueButton.onclick = () => {
           feedbackPair.style.display = "none";
           continueButton.classList.add("invisible");
           selectedCards = [];
           allowClicks = true; // Allow clicks after feedback is handled
           checkGameCompletion();
-        });
+        };
       } else {
         feedbackPair.textContent = "Das war noch nicht richtig!";
         feedbackPair.style.display = "block";
@@ -409,14 +437,14 @@ const parcours01 = {
   const parcours04 = {
     "single-choice": {
       card1: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "In welchem Film spielt eine Szene im Riesenrad im Prater?",
+        options: ["'Der dritte Mann'", "'Die zweite Frau'", "'Der vierte Hund'"],
+        answer: "In dem Krimi 'Der dritte Mann' fährt Orson Welles mit dem Riesenrad. Durch diesen Film wurde das Wiener Riesenrad international bekannt.",
       },
       card2: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "Wer erfand das Riesenrad?",
+        options: ["George Ferris", "Hans Riesen", "Carl Benz"],
+        answer: "Das erste Riesenrad der Geschichte wurde von George Ferris für die Weltausstellung in Chicago 1893 entworfen. Während Ferris' Riesenrad nach der Weltausstellug wieder abgebaut wurde, fährt das Wiener Riesenrad seit weit über 100 Jahren.",
       },
     },
   };
