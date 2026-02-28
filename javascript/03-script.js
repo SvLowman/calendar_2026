@@ -5,7 +5,7 @@ const parcours01 = {
       1: {
         "button-p": "Wo steht das?",
         "panel-info": "WIEN ist die österreichische Hauptstadt. Hier leben etwa 2 Millionen Menschen. Wien gehört zu den traditionsreichsten Städten Europas und war die Wahlheimat von Mozart und Beethoven.",
-        "panel-image": "./assets/03 - 0101.jpg",
+        "panel-image": "./assets/03 - 0101.JPG",
       },
       2: {
         "button-p": "Und vor allem: Warum?",
