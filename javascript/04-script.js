@@ -3,22 +3,23 @@
 const parcours01 = {
     accordion: {
       1: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Wo steht das?",
+        "panel-info": "LÜBECK hat gut 200.000 Einwohner und liegt in Schleswig-Holstein. Im Mittelalter war Lübeck eine der wichtigsten Städte Nordeuropas, weil sie Hauptort der Hanse war.",
+        "panel-image": "./assets/04 - 0101.JPG",
       },
       2: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Und vor allem: Warum?",
+        "panel-info": "Lübeck baute sich das Holstentor im Spätmittelalter (1478 vollendet), und zwar als möglichst prächtiges Stadttor. Wenn Händler kamen und Waren mit in die Stadt brachten, mussten sie hier Steuern zahlen.",
       },
     },
   };
   
   document.addEventListener("DOMContentLoaded", () => {
     const accordionData = parcours01.accordion;
-    const accordionContainer = document.querySelector(".accordion-container");
+    const accordionWrapper = document.querySelector(".accordion-wrapper");
   
     // Clear the accordion container to avoid duplication
-    accordionContainer.innerHTML = "";
+    accordionWrapper.innerHTML = "";
   
     // Generate accordion items dynamically
     Object.values(accordionData).forEach((item) => {
@@ -33,6 +34,16 @@ const parcours01 = {
   
       const panel = document.createElement("div");
       panel.classList.add("accordion-panel");
+
+      if (item["panel-image"]) {
+        const panelImage = document.createElement("img");
+        panelImage.classList.add("accordion-image");
+        panelImage.src = item["panel-image"];
+        //panelImage.alt = item["button-p"] || "Bild zur Sehenswürdigkeit";
+        panelImage.loading = "lazy"; // optional Performance
+        panel.appendChild(panelImage); // ✅ bewusst VOR der Info
+      }
+
       const panelInfo = document.createElement("div");
       panelInfo.classList.add("accordion-info");
       panelInfo.textContent = item["panel-info"];
@@ -42,7 +53,7 @@ const parcours01 = {
       container.appendChild(panel);
   
       // Append to the accordion container
-      accordionContainer.appendChild(container);
+      accordionWrapper.appendChild(container);
     });
   
     // Add functionality to the accordion buttons
@@ -259,18 +270,27 @@ const parcours01 = {
   const parcours03 = {
     memory: {
       pair1: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Salzspeicher" },
+        { type: "image", value: "./assets/04 - 0301.JPG" },
+      ],
+        feedback: "Als es noch keine Konservendosen gab, wurde Fisch durch Einsalzen länger haltbar gemacht. In der frühen Neuzeit war Salz deshalb wertvoll und wurde hier gelagert.",
         color: "var(--accent-1)",
       },
       pair2: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Rathaus" },
+        { type: "image", value: "./assets/04 - 0302.JPG" },
+      ],
+        feedback: "Der Bau des Rathauses begann im Mittelalter. Im Laufe der Jahrhunderte wurde immer wieder etwas dazu gebaut. Deswegen sieht das Gebäude heute etwas 'zusammengepuzzelt' aus.",
         color: "var(--accent-2)",
       },
       pair3: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Marzipan-Fische" },
+        { type: "image", value: "./assets/04 - 0303.JPG" },
+      ],
+        feedback: "Als große Handelsstadt hatte Lübeck schon vor Jahrhunderten Zugang zu exotischen Waren - wie Mandeln aus Spanien. Daraus wurde Marzipan hergestellt (und früher nur in Apotheken verkauft).",
         color: "var(--accent-3)",
       }
     },
@@ -289,12 +309,12 @@ const parcours01 = {
   
     // Generate memory cards dynamically
     const generateCards = () => {
-      const pairs = Object.values(parcours03.memory);
-      const allCards = pairs.flatMap((pair) =>
-        pair.cards.map((card) => ({
-          value: card,
+      const pairs = Object.entries(parcours03.memory);
+      const allCards = pairs.flatMap(([pairKey, pair]) =>
+        pair.cards.map((cardItem) => ({
+          value: cardItem,
           color: pair.color,
-          pairId: pair,
+          pairKey: pairKey,
         }))
       );
   
@@ -304,11 +324,21 @@ const parcours01 = {
       shuffledCards.forEach((card) => {
         const cardElement = document.createElement("div");
         cardElement.className = "memory-card";
-        cardElement.dataset.pairId = card.pairId.cards.join(); // Use joined cards to identify pairs
+        cardElement.dataset.pairId = card.pairKey; // Use joined cards to identify pairs
   
         const front = document.createElement("div");
         front.className = "memory-card-front";
-        front.textContent = card.value;
+        front.classList.add("is-image");
+        if (card.value.type === "image") {
+          const img = document.createElement("img");
+          img.className = "memory-card-image";
+          img.src = card.value.value;
+          img.loading = "lazy";
+          front.appendChild(img);
+          } else {
+            front.classList.add("is-text");
+            front.textContent = card.value.value;
+        }
         front.style.border = `0.5rem solid ${card.color}`;
   
         const back = document.createElement("div");
@@ -346,21 +376,19 @@ const parcours01 = {
         card2.classList.add("matched");
         matchedPairs++;
   
-        const feedback = Object.values(parcours03.memory).find(
-          (pair) => pair.cards.join() === pairId1
-        ).feedback;
+        const feedback = parcours03.memory[pairId1].feedback;
   
         feedbackPair.textContent = feedback;
         feedbackPair.style.display = "block";
         continueButton.classList.remove("invisible");
   
-        continueButton.addEventListener("click", () => {
+        continueButton.onclick = () => {
           feedbackPair.style.display = "none";
           continueButton.classList.add("invisible");
           selectedCards = [];
           allowClicks = true; // Allow clicks after feedback is handled
           checkGameCompletion();
-        });
+        };
       } else {
         feedbackPair.textContent = "Das war noch nicht richtig!";
         feedbackPair.style.display = "block";
@@ -409,14 +437,14 @@ const parcours01 = {
   const parcours04 = {
     "single-choice": {
       card1: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "Warum ist das Holstentor ein wenig schief?",
+        options: ["Es wurde auf weichem Grund gebaut", "Man konnte im Mittelalter noch nicht gerade bauen", "Man nennt diesen Stil 'Surrealismus'"],
+        answer: "Der Untergrund des Holstentors ist sumpfig. Im Laufe der Jahrhunderte ist das Gebäude leicht abgesackt.",
       },
       card2: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "Wer oder was war eigentlich diese Hanse?",
+        options: ["Ein Netzwerk von Handelsstädten", "Eine Sorte Bier", "Die Erfinderin des Dreimasters"],
+        answer: "Städte, die damals Mitglied in der Hanse waren, trieben Handel miteinander und hatten gute Verbindungen zueinander. Einige große Hansestädte liegen in der Nähe des Meeres - wie Rostock, Hamburg oder Bremen.",
       },
     },
   };
