@@ -280,7 +280,7 @@ const parcours01 = {
       pair2: {
         cards: [
         { type: "text", value: "Times Square" },
-        { type: "image", value: "./assets/05 - 0302.JPG" },
+        { type: "image", value: "./assets/05 - 0303.JPG" },
       ],
         feedback: "Dieser Platz wird nachts von riesigen Leuchtreklamen erhellt. Er liegt im Zentrum von Manhattan und ist meist voll mit Touristen.",
         color: "var(--accent-2)",
@@ -288,7 +288,7 @@ const parcours01 = {
       pair3: {
         cards: [
         { type: "text", value: "Brooklyn-Brücke" },
-        { type: "image", value: "./assets/05 - 0303.JPG" },
+        { type: "image", value: "./assets/05 - 0302.JPG" },
       ],
         feedback: "Sie verbindet die Stadtteile Manhattan und Brooklyn. Als die Brücke 1883 eröffnet wurde, ließ man Elefanten darüber laufen, weil viele Menschen der Konstruktion nicht trauten.",
         color: "var(--accent-3)",
