@@ -272,7 +272,7 @@ const parcours01 = {
       pair1: {
         cards: [
         { type: "text", value: "Empire State Building" },
-        { type: "image", value: "./assets/05 - 0301.JPG" },
+        { type: "image", value: "./assets/05 - 0302.JPG" },
       ],
         feedback: "Als das Empire State Building 1931 fertiggestellt wurde, war es mit 440 Metern Höhe das höchste Gebäude der Welt. Es wurde in nur 13 Monaten fertig gebaut.",
         color: "var(--accent-1)",
@@ -288,7 +288,7 @@ const parcours01 = {
       pair3: {
         cards: [
         { type: "text", value: "Brooklyn-Brücke" },
-        { type: "image", value: "./assets/05 - 0302.JPG" },
+        { type: "image", value: "./assets/05 - 0301.JPG" },
       ],
         feedback: "Sie verbindet die Stadtteile Manhattan und Brooklyn. Als die Brücke 1883 eröffnet wurde, ließ man Elefanten darüber laufen, weil viele Menschen der Konstruktion nicht trauten.",
         color: "var(--accent-3)",
