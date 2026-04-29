@@ -3,9 +3,9 @@
 const parcours01 = {
     accordion: {
       1: {
-        "button-p": "Wo steht das?",
+        "button-p": "Wo steht die?",
         "panel-info": "NEW YORK CITY ist die größte Stadt der Vereinigten Staaten von Amerika. Im Ballungsraum leben über 20 Millionen Menschen.",
-        "panel-image": "./assets/04 - 0101.JPG",
+        "panel-image": "./assets/05 - 0101.JPG",
       },
       2: {
         "button-p": "Und vor allem: Warum?",
@@ -272,7 +272,7 @@ const parcours01 = {
       pair1: {
         cards: [
         { type: "text", value: "Empire State Building" },
-        { type: "image", value: "./assets/04 - 0301.JPG" },
+        { type: "image", value: "./assets/05 - 0301.JPG" },
       ],
         feedback: "Als das Empire State Building 1931 fertiggestellt wurde, war es mit 440 Metern Höhe das höchste Gebäude der Welt. Es wurde in nur 13 Monaten fertig gebaut.",
         color: "var(--accent-1)",
@@ -280,7 +280,7 @@ const parcours01 = {
       pair2: {
         cards: [
         { type: "text", value: "Times Square" },
-        { type: "image", value: "./assets/04 - 0302.JPG" },
+        { type: "image", value: "./assets/05 - 0302.JPG" },
       ],
         feedback: "Dieser Platz wird nachts von riesigen Leuchtreklamen erhellt. Er liegt im Zentrum von Manhattan und ist meist voll mit Touristen.",
         color: "var(--accent-2)",
@@ -288,7 +288,7 @@ const parcours01 = {
       pair3: {
         cards: [
         { type: "text", value: "Brooklyn-Brücke" },
-        { type: "image", value: "./assets/04 - 0303.JPG" },
+        { type: "image", value: "./assets/05 - 0303.JPG" },
       ],
         feedback: "Sie verbindet die Stadtteile Manhattan und Brooklyn. Als die Brücke 1883 eröffnet wurde, ließ man Elefanten darüber laufen, weil viele Menschen der Konstruktion nicht trauten.",
         color: "var(--accent-3)",
