@@ -3,22 +3,23 @@
 const parcours01 = {
     accordion: {
       1: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Wo steht der?",
+        "panel-info": "Der Champ de Mars in Paris liegt direkt an der Seine. Er ist nur wenige hundert Meter vom Triumphbogen entfernt.",
+        "panel-image": "./assets/06 - 0101.JPG",
       },
       2: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Und vor allem: Warum?",
+        "panel-info": "Der Eiffelturm wurde für die Weltausstellung 1889 gebaut - die Veranstalter wollten zeigen, was mit der modernen Stahlbauweise möglich war. Nach 20 Jahren sollte er ursprünglich wieder abgebaut werden.",
       },
     },
   };
   
   document.addEventListener("DOMContentLoaded", () => {
     const accordionData = parcours01.accordion;
-    const accordionContainer = document.querySelector(".accordion-container");
+    const accordionWrapper = document.querySelector(".accordion-wrapper");
   
     // Clear the accordion container to avoid duplication
-    accordionContainer.innerHTML = "";
+    accordionWrapper.innerHTML = "";
   
     // Generate accordion items dynamically
     Object.values(accordionData).forEach((item) => {
@@ -33,6 +34,16 @@ const parcours01 = {
   
       const panel = document.createElement("div");
       panel.classList.add("accordion-panel");
+
+      if (item["panel-image"]) {
+        const panelImage = document.createElement("img");
+        panelImage.classList.add("accordion-image");
+        panelImage.src = item["panel-image"];
+        //panelImage.alt = item["button-p"] || "Bild zur Sehenswürdigkeit";
+        panelImage.loading = "lazy"; // optional Performance
+        panel.appendChild(panelImage); // ✅ bewusst VOR der Info
+      }
+
       const panelInfo = document.createElement("div");
       panelInfo.classList.add("accordion-info");
       panelInfo.textContent = item["panel-info"];
@@ -42,7 +53,7 @@ const parcours01 = {
       container.appendChild(panel);
   
       // Append to the accordion container
-      accordionContainer.appendChild(container);
+      accordionWrapper.appendChild(container);
     });
   
     // Add functionality to the accordion buttons
@@ -259,18 +270,27 @@ const parcours01 = {
   const parcours03 = {
     memory: {
       pair1: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "1665" },
+        { type: "image", value: "./assets/06 - 0301.JPG" },
+      ],
+        feedback: "Auf die Spitze des Eiffelturms führen 1665 Stufen. Die meisten Besucher nutzen jedoch den Aufzug (der damals sehr modern war).",
         color: "var(--accent-1)",
       },
       pair2: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "1887" },
+        { type: "image", value: "./assets/06 - 0302.JPG" },
+      ],
+        feedback: "Die Arbeiten am Eiffelturm begannen 1887. 300 Arbeiter setzten das Projekt innerhalb von gut zwei Jahren um.",
         color: "var(--accent-2)",
       },
       pair3: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "60000" },
+        { type: "image", value: "./assets/06 - 0303.JPG" },
+      ],
+        feedback: "Um den Eiffelturm zu streichen (und das ist alle sieben Jahre fällig), braucht man 60000 Liter Farbe. Das spezielle Eiffelturm-Braun ist oben heller und unten dunkler.",
         color: "var(--accent-3)",
       }
     },
@@ -289,12 +309,12 @@ const parcours01 = {
   
     // Generate memory cards dynamically
     const generateCards = () => {
-      const pairs = Object.values(parcours03.memory);
-      const allCards = pairs.flatMap((pair) =>
-        pair.cards.map((card) => ({
-          value: card,
+      const pairs = Object.entries(parcours03.memory);
+      const allCards = pairs.flatMap(([pairKey, pair]) =>
+        pair.cards.map((cardItem) => ({
+          value: cardItem,
           color: pair.color,
-          pairId: pair,
+          pairKey: pairKey,
         }))
       );
   
@@ -304,11 +324,21 @@ const parcours01 = {
       shuffledCards.forEach((card) => {
         const cardElement = document.createElement("div");
         cardElement.className = "memory-card";
-        cardElement.dataset.pairId = card.pairId.cards.join(); // Use joined cards to identify pairs
+        cardElement.dataset.pairId = card.pairKey; // Use joined cards to identify pairs
   
         const front = document.createElement("div");
         front.className = "memory-card-front";
-        front.textContent = card.value;
+        front.classList.add("is-image");
+        if (card.value.type === "image") {
+          const img = document.createElement("img");
+          img.className = "memory-card-image";
+          img.src = card.value.value;
+          img.loading = "lazy";
+          front.appendChild(img);
+          } else {
+            front.classList.add("is-text");
+            front.textContent = card.value.value;
+        }
         front.style.border = `0.5rem solid ${card.color}`;
   
         const back = document.createElement("div");
@@ -346,21 +376,19 @@ const parcours01 = {
         card2.classList.add("matched");
         matchedPairs++;
   
-        const feedback = Object.values(parcours03.memory).find(
-          (pair) => pair.cards.join() === pairId1
-        ).feedback;
+        const feedback = parcours03.memory[pairId1].feedback;
   
         feedbackPair.textContent = feedback;
         feedbackPair.style.display = "block";
         continueButton.classList.remove("invisible");
   
-        continueButton.addEventListener("click", () => {
+        continueButton.onclick = () => {
           feedbackPair.style.display = "none";
           continueButton.classList.add("invisible");
           selectedCards = [];
           allowClicks = true; // Allow clicks after feedback is handled
           checkGameCompletion();
-        });
+        };
       } else {
         feedbackPair.textContent = "Das war noch nicht richtig!";
         feedbackPair.style.display = "block";
@@ -409,14 +437,14 @@ const parcours01 = {
   const parcours04 = {
     "single-choice": {
       card1: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "Wie lange war der Eiffelturm das höchste Bauwerk der Welt?",
+        options: ["41 Jahre", "89 Jahre", "14 Jahre"],
+        answer: "Als der Eiffelturm errichtet wurde, war er fast doppelt so hoch wie das bis dahin höchte Bauwerk der Welt: Das Washington Monument. 1930 wurde in New York City das Chrysler Building erreichtet, das dem Eiffelturm den Rang ablief.",
       },
       card2: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "Wann ist der Eiffelturm höher?",
+        options: ["Im Sommer", "Im Winter", "Er ist immer gleich hoch"],
+        answer: "Bei warmen Temperaturen dehnt sich das Metall aus, aus dem der Eiffelturm gebaut ist. Dadurch 'wächst' er um bis zu 15 Zentimeter.",
       },
     },
   };
