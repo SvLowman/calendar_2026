@@ -3,22 +3,23 @@
 const parcours01 = {
     accordion: {
       1: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Wo steht das?",
+        "panel-info": "Die Kleinstadt FÜSSEN liegt am Fuß der bayerischen Alpen. Seit der Römerzeit führt hier eine Handelsstraße entlang.",
+        "panel-image": "./assets/07 - 0101.JPG",
       },
       2: {
-        "button-p": "...",
-        "panel-info": "...",
+        "button-p": "Und vor allem: Warum?",
+        "panel-info": "Der bayerische König Ludwig II. wollte für sich gern eine Ritterburg wie aus dem Märchen. Das Schloss ist keine historische Befestigungsanlage, sondern eher 'Deko'.",
       },
     },
   };
   
   document.addEventListener("DOMContentLoaded", () => {
     const accordionData = parcours01.accordion;
-    const accordionContainer = document.querySelector(".accordion-container");
+    const accordionWrapper = document.querySelector(".accordion-wrapper");
   
     // Clear the accordion container to avoid duplication
-    accordionContainer.innerHTML = "";
+    accordionWrapper.innerHTML = "";
   
     // Generate accordion items dynamically
     Object.values(accordionData).forEach((item) => {
@@ -33,6 +34,16 @@ const parcours01 = {
   
       const panel = document.createElement("div");
       panel.classList.add("accordion-panel");
+
+      if (item["panel-image"]) {
+        const panelImage = document.createElement("img");
+        panelImage.classList.add("accordion-image");
+        panelImage.src = item["panel-image"];
+        //panelImage.alt = item["button-p"] || "Bild zur Sehenswürdigkeit";
+        panelImage.loading = "lazy"; // optional Performance
+        panel.appendChild(panelImage); // ✅ bewusst VOR der Info
+      }
+
       const panelInfo = document.createElement("div");
       panelInfo.classList.add("accordion-info");
       panelInfo.textContent = item["panel-info"];
@@ -42,7 +53,7 @@ const parcours01 = {
       container.appendChild(panel);
   
       // Append to the accordion container
-      accordionContainer.appendChild(container);
+      accordionWrapper.appendChild(container);
     });
   
     // Add functionality to the accordion buttons
@@ -259,18 +270,27 @@ const parcours01 = {
   const parcours03 = {
     memory: {
       pair1: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Neuschwan-stein" },
+        { type: "image", value: "./assets/07 - 0301.JPG" },
+      ],
+        feedback: "Ludwig II. konnte hier erst zwei Jahre vor seinem Tod einziehen. Er lebte insgesamt nur wenige Monate dort.",
         color: "var(--accent-1)",
       },
       pair2: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Linderhof" },
+        { type: "image", value: "./assets/07 - 0302.JPG" },
+      ],
+        feedback: "Dies ist das Schloss, in dem Ludwig II. mit Abstand am meisten Zeit verbracht hat. Es war sein einziges Schloss, das vollständig eingerichtet war.",
         color: "var(--accent-2)",
       },
       pair3: {
-        cards: ["...", "..."],
-        feedback: "...",
+        cards: [
+        { type: "text", value: "Herren-chiemsee" },
+        { type: "image", value: "./assets/07 - 0303.JPG" },
+      ],
+        feedback: "Obwohl dies eins der größten Schlösser Europas ist, wohnte Ludwig II. hier nur knapp zwei Wochen. Er richtete nie große Hoffeste aus, wie andere Könige.",
         color: "var(--accent-3)",
       }
     },
@@ -289,12 +309,12 @@ const parcours01 = {
   
     // Generate memory cards dynamically
     const generateCards = () => {
-      const pairs = Object.values(parcours03.memory);
-      const allCards = pairs.flatMap((pair) =>
-        pair.cards.map((card) => ({
-          value: card,
+      const pairs = Object.entries(parcours03.memory);
+      const allCards = pairs.flatMap(([pairKey, pair]) =>
+        pair.cards.map((cardItem) => ({
+          value: cardItem,
           color: pair.color,
-          pairId: pair,
+          pairKey: pairKey,
         }))
       );
   
@@ -304,11 +324,21 @@ const parcours01 = {
       shuffledCards.forEach((card) => {
         const cardElement = document.createElement("div");
         cardElement.className = "memory-card";
-        cardElement.dataset.pairId = card.pairId.cards.join(); // Use joined cards to identify pairs
+        cardElement.dataset.pairId = card.pairKey; // Use joined cards to identify pairs
   
         const front = document.createElement("div");
         front.className = "memory-card-front";
-        front.textContent = card.value;
+        front.classList.add("is-image");
+        if (card.value.type === "image") {
+          const img = document.createElement("img");
+          img.className = "memory-card-image";
+          img.src = card.value.value;
+          img.loading = "lazy";
+          front.appendChild(img);
+          } else {
+            front.classList.add("is-text");
+            front.textContent = card.value.value;
+        }
         front.style.border = `0.5rem solid ${card.color}`;
   
         const back = document.createElement("div");
@@ -346,21 +376,19 @@ const parcours01 = {
         card2.classList.add("matched");
         matchedPairs++;
   
-        const feedback = Object.values(parcours03.memory).find(
-          (pair) => pair.cards.join() === pairId1
-        ).feedback;
+        const feedback = parcours03.memory[pairId1].feedback;
   
         feedbackPair.textContent = feedback;
         feedbackPair.style.display = "block";
         continueButton.classList.remove("invisible");
   
-        continueButton.addEventListener("click", () => {
+        continueButton.onclick = () => {
           feedbackPair.style.display = "none";
           continueButton.classList.add("invisible");
           selectedCards = [];
           allowClicks = true; // Allow clicks after feedback is handled
           checkGameCompletion();
-        });
+        };
       } else {
         feedbackPair.textContent = "Das war noch nicht richtig!";
         feedbackPair.style.display = "block";
@@ -409,14 +437,14 @@ const parcours01 = {
   const parcours04 = {
     "single-choice": {
       card1: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "Wie lange steht das Schloss Neuschwanstein schon?",
+        options: ["Etwa 150 Jahre", "Etwa 500 Jahre", "Etwa 1000 Jahre"],
+        answer: "Das Schloss sieht zwar mit Absicht mittelalterlich und altmodisch aus. Es war aber schon bei der Fertigstellung (1884) mit Toilettenspülung, Heizung und Telefon ausgestattet.",
       },
       card2: {
-        question: "...",
-        options: ["...", "...", "..."],
-        answer: "...",
+        question: "Wann wurde das Schloss für Besucher geöffnet?",
+        options: ["Direkt nach Ludwigs Tod", "Nach dem Ersten Weltkrieg", "1989"],
+        answer: "Mit den Eintrittsgeldern konnte Bayern die hohen Baukosten für das Schloss ausgleichen. Neuschwanstein ist eins der am meisten besuchten Schlösser Europas.",
       },
     },
   };
