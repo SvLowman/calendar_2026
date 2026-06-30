@@ -271,7 +271,7 @@ const parcours01 = {
     memory: {
       pair1: {
         cards: [
-        { type: "text", value: "Neuschwan-stein" },
+        { type: "text", value: "Neuschwan- stein" },
         { type: "image", value: "./assets/07 - 0301.JPG" },
       ],
         feedback: "Ludwig II. konnte hier erst zwei Jahre vor seinem Tod einziehen. Er lebte insgesamt nur wenige Monate dort.",
@@ -287,7 +287,7 @@ const parcours01 = {
       },
       pair3: {
         cards: [
-        { type: "text", value: "Herren-chiemsee" },
+        { type: "text", value: "Herren- chiemsee" },
         { type: "image", value: "./assets/07 - 0303.JPG" },
       ],
         feedback: "Obwohl dies eins der größten Schlösser Europas ist, wohnte Ludwig II. hier nur knapp zwei Wochen. Er richtete nie große Hoffeste aus, wie andere Könige.",
