@@ -9,7 +9,7 @@ const parcours01 = {
       },
       2: {
         "button-p": "Und vor allem: Warum?",
-        "panel-info": "Mit den vier Präsidentenköpfen sollten Touristen ins ländliche Süddakota gelockt werden. Es ist nicht nur ein berühmtes Wahrzeichen, sondern auch ein umstrittenes Denkmal - weil es in einen heiligen Berg der Lakota gehauen wurde.",
+        "panel-info": "Mit den je 18 Meter hohen Präsidentenköpfen sollten Touristen ins ländliche Süddakota gelockt werden. Es ist nicht nur ein berühmtes Wahrzeichen, sondern auch ein umstrittenes Denkmal - weil es in einen heiligen Berg der Lakota gehauen wurde.",
       },
     },
   };
@@ -444,7 +444,7 @@ const parcours01 = {
       card2: {
         question: "Wie nannten die Lakota den Mount Rushmore schon, bevor er seinen englischen Namen bekam?",
         options: ["Sechs Großväter", "Bärenhütte", "Adlerberg"],
-        answer: "Der Name bezieht sich auf die vier Himmelsrichtungen sowie den Himmel und die Erde. Bei den Lakota hatte er eine hohe Bedeutung.",
+        answer: "Der Name bezieht sich auf die vier Himmelsrichtungen sowie den Himmel und die Erde. Charles Rushmore dagegen war ein Anwalt aus New York.",
       },
     },
   };
