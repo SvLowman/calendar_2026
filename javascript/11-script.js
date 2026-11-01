@@ -5,7 +5,7 @@ const parcours01 = {
       1: {
         "button-p": "Wo steht die?",
         "panel-info": "EISENACH liegt in Thüringen am Rande des Thüringer Waldes. Mit 42.000 Einwohnern ist die Stadt nicht besonders groß, dafür aber ist sie geschichtlich bedeutsam.",
-        "panel-image": "./assets/10 - 0101.JPG",
+        "panel-image": "./assets/11 - 0101.JPG",
       },
       2: {
         "button-p": "Und vor allem: Warum?",
@@ -287,7 +287,7 @@ const parcours01 = {
       },
       pair3: {
         cards: [
-        { type: "text", value: "Thüriger Wald" },
+        { type: "text", value: "Thüringer Wald" },
         { type: "image", value: "./assets/11 - 0303.JPG" },
       ],
         feedback: "Dieses Mittelgebirge erstreckt sich auf etwa 100 Kilometern durch Thürigen. Die steilen Hänge der Hügel sind ideal für eine Burg - für Angreifer ist der Zugang dadurch erschwert.",
@@ -444,7 +444,7 @@ const parcours01 = {
       card2: {
         question: "Was soll Martin Luther der Legende nach in seiner Stube auf der Wartburg nach dem Teufel geworfen haben?",
         options: ["Ein Tintenfass", "Eine Schweinshaxe", "Einen Schuh"],
-        answer: "Angeblich soll der Teufel Luther am Schreibtisch gestört haben - Luther sol ihm sein Tntenfass entgegengeschleudert haben. Diese Geschichte war so beliebt, dass die Betreiber der Wartburg früher eigens für Besucher einen Tintenfleck an die Wands gemalt hatten.",
+        answer: "Angeblich soll der Teufel Luther am Schreibtisch gestört haben - Luther soll ihm sein Tintenfass entgegen geschleudert haben. Diese Geschichte war so beliebt, dass die Betreiber der Wartburg früher eigens für Besucher einen Tintenfleck an die Wand gemalt hatten.",
       },
     },
   };
